@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import RoomSelector from "@/components/RoomSelector";
+import ModeratorSelector from "@/components/ModeratorSelector";
 import HeaderInfo from "@/components/HeaderInfo";
 import ParticipantTable from "@/components/ParticipantTable";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10','ROOM 11'];
-
 export default function Dashboard() {
-  const [selectedRoom, setSelectedRoom] = useState('ROOM 1');
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -21,7 +19,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchRoomData(selectedRoom);
+    if (selectedRoom) fetchRoomData(selectedRoom);
   }, [selectedRoom]);
 
   const handleHeaderSave = async (headerData) => {
@@ -52,15 +50,19 @@ export default function Dashboard() {
         <p className="text-sm text-gray-500 mt-1">Sistem Penilaian Peserta</p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
-        {/* Room Selector */}
-        <RoomSelector
-          rooms={SHEET_NAMES}
-          selected={selectedRoom}
-          onSelect={setSelectedRoom}
-        />
+      {/* Moderator Selector Bar */}
+      <ModeratorSelector selected={selectedRoom} onSelect={setSelectedRoom} />
 
-        {loading ? (
+      <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
+        {!selectedRoom ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <span className="text-3xl">👋</span>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">Selamat Datang!</h2>
+            <p className="text-gray-500 max-w-sm">Silakan pilih nama Anda sebagai moderator di bagian atas untuk memulai penilaian.</p>
+          </div>
+        ) : loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             <span className="ml-3 text-gray-600">Memuat data...</span>
