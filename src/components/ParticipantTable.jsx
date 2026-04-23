@@ -140,7 +140,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
             <h2 className="text-lg font-semibold text-gray-800">Daftar Peserta & Penilaian</h2>
             <p className="text-sm text-gray-500 mt-0.5">{participants.length} peserta</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handlePrint} className="ml-2 text-gray-600 border-gray-300">
+          <Button variant="outline" size="sm" onClick={handlePrint} className="ml-2 text-blue-600 border-blue-400 hover:bg-blue-50">
             <Printer className="w-4 h-4 mr-1" /> Print PDF
           </Button>
         </div>
@@ -220,7 +220,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
                     {isEditing ? (
                       <Button
                         size="sm"
-                        className="h-7 px-3"
+                        className="h-7 px-3 bg-blue-600 hover:bg-blue-700 text-white"
                         onClick={() => saveEdit(p)}
                         disabled={saving}
                       >

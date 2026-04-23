@@ -35,15 +35,15 @@ export default function HeaderInfo({ data, onSave }) {
           Info {data.sheetName}
         </h2>
         {!editing ? (
-          <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
+          <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="text-blue-600 border-blue-400 hover:bg-blue-50">
             <Pencil className="w-4 h-4 mr-1" /> Edit
           </Button>
         ) : (
           <div className="flex gap-2">
-            <Button size="sm" onClick={handleSave}>
+            <Button size="sm" onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 text-white">
               <Save className="w-4 h-4 mr-1" /> Simpan
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setEditing(false)}>
+            <Button variant="outline" size="sm" onClick={() => setEditing(false)} className="text-blue-600 border-blue-400 hover:bg-blue-50">
               <X className="w-4 h-4" />
             </Button>
           </div>
