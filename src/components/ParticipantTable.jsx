@@ -15,11 +15,21 @@ const SCORE_KEYS = ['score1', 'score2', 'score3', 'score4', 'score5'];
 
 const getScoreColor = (val) => {
   const n = parseInt(val);
-  if (isNaN(n) || val === '' || val === '-') return 'text-gray-300';
+  if (isNaN(n) || !val || val === '-') return 'text-gray-300';
   if (n <= 25) return 'text-red-500';
   if (n <= 50) return 'text-orange-500';
   if (n <= 75) return 'text-green-600';
-  return 'text-blue-600';
+  return 'text-blue-500';
+};
+
+// Inline style approach to bypass Tailwind purge for dynamic colors
+const getScoreStyle = (val) => {
+  const n = parseInt(val);
+  if (isNaN(n) || !val || val === '-') return { color: '#d1d5db' };
+  if (n <= 25) return { color: '#ef4444' };
+  if (n <= 50) return { color: '#f97316' };
+  if (n <= 75) return { color: '#16a34a' };
+  return { color: '#2563eb' };
 };
 
 export default function ParticipantTable({ participants, onSaveScores }) {
@@ -117,7 +127,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                           autoFocus={i === 0}
                         />
                       ) : (
-                        <span className={`font-medium ${getScoreColor(p[key])}`}>
+                        <span className="font-medium" style={getScoreStyle(p[key])}>
                           {p[key] || '-'}
                         </span>
                       )}
@@ -125,7 +135,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                   ))}
 
                   <td className="px-3 py-3 text-center">
-                    <span className={`font-bold text-base ${parseInt(p.total) > 0 ? 'text-purple-600' : 'text-gray-300'}`}>
+                    <span className="font-bold text-base" style={{ color: parseInt(p.total) > 0 ? '#9333ea' : '#d1d5db' }}>
                       {p.total || '0'}
                     </span>
                   </td>
