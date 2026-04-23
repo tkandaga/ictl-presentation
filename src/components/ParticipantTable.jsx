@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pencil, Save, X } from "lucide-react";
+import { Save } from "lucide-react";
 
 const SCORE_LABELS = [
   'Kejelasan & Struktur',
@@ -76,14 +76,18 @@ export default function ParticipantTable({ participants, onSaveScores }) {
             {participants.map((p) => {
               const isEditing = editingRow === p.rowIndex;
               return (
-                <tr key={p.rowIndex} className={`hover:bg-gray-50 transition-colors ${isEditing ? 'bg-blue-50' : ''}`}>
+                <tr
+                  key={p.rowIndex}
+                  onClick={() => !isEditing && startEdit(p)}
+                  className={`transition-colors ${isEditing ? 'bg-blue-50' : 'hover:bg-gray-50 cursor-pointer'}`}
+                >
                   <td className="px-3 py-3 text-gray-500">{p.no}</td>
                   <td className="px-3 py-3 font-mono text-xs text-blue-600">{p.abstractCode}</td>
                   <td className="px-3 py-3 font-medium text-gray-800">{p.name}</td>
                   <td className="px-3 py-3 text-gray-600 text-xs">{p.institution}</td>
 
                   {SCORE_KEYS.map((key, i) => (
-                    <td key={i} className="px-3 py-3 text-center">
+                    <td key={i} className="px-3 py-3 text-center" onClick={(e) => isEditing && e.stopPropagation()}>
                       {isEditing ? (
                         <Input
                           type="number"
@@ -92,6 +96,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                           value={editScores[key] ?? ''}
                           onChange={(e) => setEditScores({ ...editScores, [key]: e.target.value })}
                           className="w-16 text-center text-sm h-8 mx-auto"
+                          autoFocus={i === 0}
                         />
                       ) : (
                         <span className={`font-medium ${p[key] ? 'text-gray-800' : 'text-gray-300'}`}>
@@ -107,36 +112,18 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                     </span>
                   </td>
 
-                  <td className="px-3 py-3 text-center">
+                  <td className="px-3 py-3 text-center" onClick={(e) => e.stopPropagation()}>
                     {isEditing ? (
-                      <div className="flex gap-1 justify-center">
-                        <Button
-                          size="sm"
-                          className="h-7 px-2"
-                          onClick={() => saveEdit(p)}
-                          disabled={saving}
-                        >
-                          <Save className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="h-7 px-2"
-                          onClick={cancelEdit}
-                          disabled={saving}
-                        >
-                          <X className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    ) : (
                       <Button
                         size="sm"
-                        variant="ghost"
-                        className="h-7 px-2 text-blue-600 hover:text-blue-800"
-                        onClick={() => startEdit(p)}
+                        className="h-7 px-3"
+                        onClick={() => saveEdit(p)}
+                        disabled={saving}
                       >
-                        <Pencil className="w-3 h-3" />
+                        <Save className="w-3 h-3 mr-1" /> Simpan
                       </Button>
+                    ) : (
+                      <span className="text-xs text-gray-300">—</span>
                     )}
                   </td>
                 </tr>
