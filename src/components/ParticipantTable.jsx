@@ -29,11 +29,6 @@ export default function ParticipantTable({ participants, onSaveScores }) {
     });
   };
 
-  const cancelEdit = () => {
-    setEditingRow(null);
-    setEditScores({});
-  };
-
   const saveEdit = async (p) => {
     setSaving(true);
     await onSaveScores(p.rowIndex, editScores);
@@ -69,7 +64,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                 <th key={i} className="px-3 py-3 text-center min-w-[100px]">{label}</th>
               ))}
               <th className="px-3 py-3 text-center font-bold">Total</th>
-              <th className="px-3 py-3 text-center w-20">Aksi</th>
+              <th className="px-3 py-3 text-center w-28">Aksi</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -78,8 +73,8 @@ export default function ParticipantTable({ participants, onSaveScores }) {
               return (
                 <tr
                   key={p.rowIndex}
-                  onClick={() => !isEditing && startEdit(p)}
-                  className={`transition-colors ${isEditing ? 'bg-blue-50' : 'hover:bg-gray-50 cursor-pointer'}`}
+                  onClick={() => { if (!isEditing) startEdit(p); }}
+                  className={`transition-colors ${isEditing ? 'bg-blue-50' : 'hover:bg-blue-50 cursor-pointer'}`}
                 >
                   <td className="px-3 py-3 text-gray-500">{p.no}</td>
                   <td className="px-3 py-3 font-mono text-xs text-blue-600">{p.abstractCode}</td>
@@ -87,7 +82,11 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                   <td className="px-3 py-3 text-gray-600 text-xs">{p.institution}</td>
 
                   {SCORE_KEYS.map((key, i) => (
-                    <td key={i} className="px-3 py-3 text-center" onClick={(e) => isEditing && e.stopPropagation()}>
+                    <td
+                      key={i}
+                      className="px-3 py-3 text-center"
+                      onClick={(e) => { if (isEditing) e.stopPropagation(); }}
+                    >
                       {isEditing ? (
                         <Input
                           type="number"
@@ -112,7 +111,10 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                     </span>
                   </td>
 
-                  <td className="px-3 py-3 text-center" onClick={(e) => e.stopPropagation()}>
+                  <td
+                    className="px-3 py-3 text-center"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     {isEditing ? (
                       <Button
                         size="sm"
@@ -120,7 +122,8 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                         onClick={() => saveEdit(p)}
                         disabled={saving}
                       >
-                        <Save className="w-3 h-3 mr-1" /> Simpan
+                        <Save className="w-3 h-3 mr-1" />
+                        {saving ? 'Menyimpan...' : 'Simpan'}
                       </Button>
                     ) : (
                       <span className="text-xs text-gray-300">—</span>
