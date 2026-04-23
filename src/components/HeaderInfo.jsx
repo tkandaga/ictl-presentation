@@ -35,7 +35,7 @@ export default function HeaderInfo({ data, onSave }) {
           Info {data.sheetName}
         </h2>
         {!editing ? (
-          <Button variant="outline" size="sm" onClick={() => setEditing(true)} className="text-blue-600 border-blue-400 hover:bg-blue-50">
+          <Button size="sm" onClick={() => setEditing(true)} className="bg-blue-600 hover:bg-blue-700 text-white">
             <Pencil className="w-4 h-4 mr-1" /> Edit
           </Button>
         ) : (
