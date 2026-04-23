@@ -13,6 +13,15 @@ const SCORE_LABELS = [
 
 const SCORE_KEYS = ['score1', 'score2', 'score3', 'score4', 'score5'];
 
+const getScoreColor = (val) => {
+  const n = parseInt(val);
+  if (isNaN(n) || val === '' || val === '-') return 'text-gray-300';
+  if (n <= 25) return 'text-red-500';
+  if (n <= 50) return 'text-orange-500';
+  if (n <= 75) return 'text-green-600';
+  return 'text-blue-600';
+};
+
 export default function ParticipantTable({ participants, onSaveScores }) {
   const [editingRow, setEditingRow] = useState(null);
   const [editScores, setEditScores] = useState({});
@@ -65,7 +74,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
+            <tr className="bg-blue-100 text-blue-800 text-xs uppercase tracking-wide">
               <th className="px-3 py-3 text-left w-10">No</th>
               <th className="px-3 py-3 text-left">Kode</th>
               <th className="px-3 py-3 text-left min-w-[180px]">Nama Peserta</th>
@@ -108,7 +117,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                           autoFocus={i === 0}
                         />
                       ) : (
-                        <span className={`font-medium ${p[key] ? 'text-gray-800' : 'text-gray-300'}`}>
+                        <span className={`font-medium ${getScoreColor(p[key])}`}>
                           {p[key] || '-'}
                         </span>
                       )}
@@ -116,7 +125,7 @@ export default function ParticipantTable({ participants, onSaveScores }) {
                   ))}
 
                   <td className="px-3 py-3 text-center">
-                    <span className={`font-bold text-base ${parseInt(p.total) > 0 ? 'text-green-600' : 'text-gray-300'}`}>
+                    <span className={`font-bold text-base ${parseInt(p.total) > 0 ? 'text-purple-600' : 'text-gray-300'}`}>
                       {p.total || '0'}
                     </span>
                   </td>
