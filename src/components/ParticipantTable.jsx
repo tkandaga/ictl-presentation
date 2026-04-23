@@ -47,9 +47,19 @@ export default function ParticipantTable({ participants, onSaveScores }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-800">Daftar Peserta & Penilaian</h2>
-        <p className="text-sm text-gray-500 mt-0.5">{participants.length} peserta</p>
+      <div className="px-5 py-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-start gap-4">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-800">Daftar Peserta & Penilaian</h2>
+          <p className="text-sm text-gray-500 mt-0.5">{participants.length} peserta</p>
+        </div>
+        <div className="sm:ml-auto bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 max-w-sm w-full">
+          <p className="text-xs font-bold text-orange-600 uppercase tracking-wide mb-1.5">📋 Cara Pengisian</p>
+          <ol className="text-xs text-orange-800 space-y-1 list-decimal list-inside">
+            <li>Klik nama presenter untuk mengisi penilaian</li>
+            <li>Isikan skor <span className="font-semibold">0–100</span> pada setiap kolom</li>
+            <li>Klik tombol <span className="font-semibold">Simpan</span> untuk menyimpan</li>
+          </ol>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
