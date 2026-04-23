@@ -6,7 +6,7 @@ import ParticipantTable from "@/components/ParticipantTable";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
-const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10'];
+const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10','ROOM 11'];
 
 export default function Dashboard() {
   const [selectedRoom, setSelectedRoom] = useState('ROOM 1');
