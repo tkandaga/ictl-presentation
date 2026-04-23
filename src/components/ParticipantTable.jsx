@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Save } from "lucide-react";
+import { Save, Printer } from "lucide-react";
 
 const SCORE_LABELS = [
   'Kejelasan & Struktur',
@@ -32,10 +32,78 @@ const getScoreStyle = (val) => {
   return { color: '#2563eb' };
 };
 
-export default function ParticipantTable({ participants, onSaveScores }) {
+export default function ParticipantTable({ participants, onSaveScores, roomData }) {
   const [editingRow, setEditingRow] = useState(null);
   const [editScores, setEditScores] = useState({});
   const [saving, setSaving] = useState(false);
+
+  const handlePrint = () => {
+    const printContent = `
+      <html>
+      <head>
+        <title>Penilaian ${roomData?.sheetName || 'Room'}</title>
+        <style>
+          body { font-family: Arial, sans-serif; font-size: 11px; margin: 20px; }
+          h2 { font-size: 14px; margin-bottom: 4px; }
+          .meta { margin-bottom: 12px; color: #555; font-size: 11px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+          th { background: #dbeafe; color: #1e40af; padding: 6px 8px; text-align: center; font-size: 10px; border: 1px solid #bfdbfe; }
+          th.left { text-align: left; }
+          td { padding: 5px 8px; border: 1px solid #e5e7eb; font-size: 10px; }
+          td.center { text-align: center; }
+          tr:nth-child(even) { background: #f9fafb; }
+          .total { font-weight: bold; color: #9333ea; }
+        </style>
+      </head>
+      <body>
+        <h2>Daftar Peserta & Penilaian — ${roomData?.sheetName || ''}</h2>
+        <div class="meta">
+          Moderator: ${roomData?.moderator || '-'} &nbsp;|&nbsp;
+          Invited Speaker: ${roomData?.invitedSpeaker || '-'} &nbsp;|&nbsp;
+          Notulis: ${roomData?.minuteTaker || '-'}
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th class="left">No</th>
+              <th class="left">Kode</th>
+              <th class="left">Nama Peserta</th>
+              <th class="left">Institusi</th>
+              <th>Kejelasan & Struktur</th>
+              <th>Penguasaan Materi</th>
+              <th>Interaksi Audiens 1</th>
+              <th>Interaksi Audiens 2</th>
+              <th>Kesesuaian Waktu</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${participants.map(p => `
+              <tr>
+                <td>${p.no}</td>
+                <td>${p.abstractCode}</td>
+                <td>${p.name}</td>
+                <td>${p.institution}</td>
+                <td class="center">${p.score1 || '-'}</td>
+                <td class="center">${p.score2 || '-'}</td>
+                <td class="center">${p.score3 || '-'}</td>
+                <td class="center">${p.score4 || '-'}</td>
+                <td class="center">${p.score5 || '-'}</td>
+                <td class="center total">${p.total || '0'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
+    const win = window.open('', '_blank');
+    win.document.write(printContent);
+    win.document.close();
+    win.focus();
+    win.print();
+    win.close();
+  };
 
   const startEdit = (p) => {
     setEditingRow(p.rowIndex);
@@ -67,9 +135,14 @@ export default function ParticipantTable({ participants, onSaveScores }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <div className="px-5 py-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-start gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-800">Daftar Peserta & Penilaian</h2>
-          <p className="text-sm text-gray-500 mt-0.5">{participants.length} peserta</p>
+        <div className="flex items-center gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800">Daftar Peserta & Penilaian</h2>
+            <p className="text-sm text-gray-500 mt-0.5">{participants.length} peserta</p>
+          </div>
+          <Button variant="outline" size="sm" onClick={handlePrint} className="ml-2 text-gray-600 border-gray-300">
+            <Printer className="w-4 h-4 mr-1" /> Print PDF
+          </Button>
         </div>
         <div className="sm:ml-auto bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 max-w-sm w-full">
           <p className="text-xs font-bold text-orange-600 uppercase tracking-wide mb-1.5">📋 Cara Pengisian</p>

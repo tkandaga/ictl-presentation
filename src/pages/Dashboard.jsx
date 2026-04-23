@@ -73,6 +73,7 @@ export default function Dashboard() {
             <ParticipantTable
               participants={roomData.participants}
               onSaveScores={handleScoresSave}
+              roomData={roomData}
             />
           </>
         ) : null}
