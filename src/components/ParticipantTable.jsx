@@ -4,10 +4,10 @@ import { Printer } from "lucide-react";
 import ScoreSliderModal from "@/components/ScoreSliderModal";
 
 const SCORE_LABELS = [
-  'Kejelasan & Struktur',
+  'Kejelasan dan Struktur Penyampaian',
   'Penguasaan Materi',
-  'Interaksi Audiens 1',
-  'Interaksi Audiens 2',
+  'Interaksi dengan Audiens',
+  'Penggunaan Media Presentasi',
   'Kesesuaian Waktu',
 ];
 

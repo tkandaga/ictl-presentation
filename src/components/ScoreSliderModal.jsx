@@ -6,7 +6,7 @@ import { Save, X } from "lucide-react";
 const RUBRIK = [
   {
     key: "score1",
-    label: "Kejelasan & Struktur",
+    label: "Kejelasan dan Struktur Penyampaian",
     descriptions: [
       { min: 86, max: 100, level: "Sangat Baik", color: "#2563eb", desc: "Sangat jelas, runtut, sistematis, dan mudah dipahami." },
       { min: 71, max: 85, level: "Baik", color: "#16a34a", desc: "Jelas dan runtut, ada sedikit kekurangan." },
@@ -28,7 +28,7 @@ const RUBRIK = [
   },
   {
     key: "score3",
-    label: "Interaksi Audiens 1",
+    label: "Interaksi dengan Audiens",
     descriptions: [
       { min: 86, max: 100, level: "Sangat Baik", color: "#2563eb", desc: "Sangat interaktif, komunikatif, dan responsif." },
       { min: 71, max: 85, level: "Baik", color: "#16a34a", desc: "Interaksi baik dan cukup aktif." },
@@ -39,13 +39,13 @@ const RUBRIK = [
   },
   {
     key: "score4",
-    label: "Interaksi Audiens 2",
+    label: "Penggunaan Media Presentasi",
     descriptions: [
-      { min: 86, max: 100, level: "Sangat Baik", color: "#2563eb", desc: "Sangat interaktif, komunikatif, dan responsif." },
-      { min: 71, max: 85, level: "Baik", color: "#16a34a", desc: "Interaksi baik dan cukup aktif." },
-      { min: 56, max: 70, level: "Cukup", color: "#ca8a04", desc: "Interaksi terbatas." },
-      { min: 41, max: 55, level: "Kurang", color: "#ea580c", desc: "Kurang melibatkan audiens." },
-      { min: 0, max: 40, level: "Sangat Kurang", color: "#dc2626", desc: "Tidak ada interaksi." },
+      { min: 86, max: 100, level: "Sangat Baik", color: "#2563eb", desc: "Media sangat relevan, menarik, dan mendukung penyampaian." },
+      { min: 71, max: 85, level: "Baik", color: "#16a34a", desc: "Media relevan dan cukup mendukung." },
+      { min: 56, max: 70, level: "Cukup", color: "#ca8a04", desc: "Media cukup relevan namun kurang optimal." },
+      { min: 41, max: 55, level: "Kurang", color: "#ea580c", desc: "Media kurang mendukung penyampaian." },
+      { min: 0, max: 40, level: "Sangat Kurang", color: "#dc2626", desc: "Media tidak relevan atau tidak ada." },
     ],
   },
   {
