@@ -2,17 +2,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { User } from "lucide-react";
 
 const MODERATORS = [
-  { name: 'Dr. Sidik Puryanto, M.Pd.', room: 'ROOM 1' },
-  { name: 'Dr. Andy Sapta, S.Pd., M.Pd., M.Si.', room: 'ROOM 2' },
-  { name: 'Dwi Rezki Hardianto Putra Rustan, S.S., M.Pd.', room: 'ROOM 3' },
-  { name: 'Ami Hibatul Jameel, S.Pd., M.A.', room: 'ROOM 4' },
-  { name: 'Adrian Rasyki, M.Hum.', room: 'ROOM 5' },
-  { name: 'Dr. Yati, M.Pd.', room: 'ROOM 6' },
-  { name: 'Dr. Achmad Anwar Abidin, M.Pd.I.', room: 'ROOM 7' },
-  { name: 'Dr. Prima Dwi Yuliani, M.Pd.', room: 'ROOM 8' },
-  { name: 'Dr. Ahmad Syaikhu, M.Pd.', room: 'ROOM 9' },
-  { name: 'Dr. Siti Muyaroah, M.Pd.', room: 'ROOM 10' },
-  { name: 'Dr. Arini Noor Izzati, M.Pd.', room: 'ROOM 11' },
+  { name: 'Valeria Yekti Kwasaning Gusti, M.Pd.', room: 'ROOM 1' },
+  { name: 'Saddam Fathurrachman, M.Pd.', room: 'ROOM 2' },
+  { name: 'Ami Hibatul Jameel, S.Pd., M.A.', room: 'ROOM 3' },
+  { name: 'Novi Eka Saputri, M.Pd.', room: 'ROOM 4' },
+  { name: 'Dr. Ahmad Syaikhu, M.Pd.', room: 'ROOM 5' },
+  { name: 'Dr. Karisdha Pradityana, M.Pd.', room: 'ROOM 6' },
+  { name: 'Ir. Ida Zubaidah, M.A., Ed.D.', room: 'ROOM 7' },
+  { name: 'Hidayah, S.Pd., M.Pd.', room: 'ROOM 8' },
+  { name: 'Dwi Rezki Hardianto Putra Rustan, S.S., M.A', room: 'ROOM 9' },
+  { name: 'Adrian Rasyki, M.Hum.', room: 'ROOM 10' },
+  { name: 'Nurul Isra Fauziah, M.Sc.', room: 'ROOM 11' },
+  { name: 'Dr. Yati, M.Pd.', room: 'ROOM 12' },
+  { name: 'Indri Annisa, M.Pd.', room: 'ROOM 13' },
+  { name: 'Dola Suciana, M.Pd.', room: 'ROOM 14' },
+  { name: 'Agnisa Widayanti, M.Pd.', room: 'ROOM 15' },
+  { name: 'Sari Wardani Simarmata, M.Pd.', room: 'ROOM 16' },
 ];
 
 export { MODERATORS };
