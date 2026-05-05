@@ -71,7 +71,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
             ${participants.map(p => `
               <tr>
                 <td>${p.no}</td>
-                <td>${p.abstractCode}</td>
+                <td>${p.mode === 'onsite' ? '🟢' : ''}</td>
                 <td>${p.name}</td>
                 <td>${p.institution}</td>
                 <td class="center">${p.score1 || '-'}</td>
@@ -155,7 +155,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
             <thead>
               <tr className="bg-blue-100 text-blue-800 text-xs uppercase tracking-wide">
                 <th className="px-3 py-3 text-left w-10">No</th>
-                <th className="px-3 py-3 text-left">Kode</th>
+                <th className="px-3 py-3 text-center w-12">Mode</th>
                 <th className="px-3 py-3 text-left min-w-[180px]">Nama Peserta</th>
                 <th className="px-3 py-3 text-left min-w-[160px]">Institusi</th>
               <th className="px-3 py-3 text-left min-w-[100px]">Negara</th>
@@ -173,7 +173,9 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
                   className="hover:bg-blue-50 transition-colors"
                 >
                   <td className="px-3 py-3 text-gray-500">{p.no}</td>
-                  <td className="px-3 py-3 font-mono text-xs text-blue-600">{p.abstractCode}</td>
+                  <td className="px-3 py-3 text-center">
+                    {p.mode === 'onsite' ? <span title="On-site">🟢</span> : null}
+                  </td>
                   <td className="px-3 py-3 font-medium text-gray-800">{p.name}</td>
                   <td className="px-3 py-3 text-gray-600 text-xs">{p.institution}</td>
                   <td className="px-3 py-3 text-gray-600 text-xs">{p.country}</td>

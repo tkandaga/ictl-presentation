@@ -36,10 +36,12 @@ Deno.serve(async (req) => {
       if (!name) continue;
       // Skip the "Invited Speaker" placeholder row
       if (name.toLowerCase().includes('invited speaker')) continue;
+      const modeCell = row[1] || '';
+      const isOnsite = modeCell.trim().length > 0; // has green circle = on-site
       participants.push({
         rowIndex: i + 1, // 1-indexed for Sheets API
         no: counter++,
-        abstractCode: row[1] || '',
+        mode: isOnsite ? 'onsite' : 'online',
         name: name,
         institution: row[3] || '',
         country: row[4] || '',
