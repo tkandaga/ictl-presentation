@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
       const { rowIndex, score1, score2, score3, score4, score5 } = data;
       valueRanges = [
         {
-          range: `${sheetName}!E${rowIndex}:I${rowIndex}`,
+          range: `${sheetName}!F${rowIndex}:J${rowIndex}`,
           values: [[score1, score2, score3, score4, score5]]
         }
       ];

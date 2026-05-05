@@ -146,6 +146,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
               <li>Geser slider untuk setiap kategori (<span className="font-semibold">0–100</span>)</li>
               <li>Klik tombol <span className="font-semibold">Simpan</span> untuk menyimpan</li>
             </ol>
+            <p className="text-xs text-orange-700 mt-2">🔴 = Presenter hadir secara <span className="font-semibold">Online</span></p>
           </div>
         </div>
 
@@ -157,6 +158,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
                 <th className="px-3 py-3 text-left">Kode</th>
                 <th className="px-3 py-3 text-left min-w-[180px]">Nama Peserta</th>
                 <th className="px-3 py-3 text-left min-w-[160px]">Institusi</th>
+              <th className="px-3 py-3 text-left min-w-[100px]">Negara</th>
                 {SCORE_LABELS.map((label, i) => (
                   <th key={i} className="px-3 py-3 text-center min-w-[100px]">{label}</th>
                 ))}
@@ -174,6 +176,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
                   <td className="px-3 py-3 font-mono text-xs text-blue-600">{p.abstractCode}</td>
                   <td className="px-3 py-3 font-medium text-gray-800">{p.name}</td>
                   <td className="px-3 py-3 text-gray-600 text-xs">{p.institution}</td>
+                  <td className="px-3 py-3 text-gray-600 text-xs">{p.country}</td>
 
                   {SCORE_KEYS.map((key, i) => (
                     <td key={i} className="px-3 py-3 text-center">

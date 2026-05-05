@@ -325,15 +325,15 @@ Deno.serve(async (req) => {
         { range: `${room}!C5`, values: [[header.it]] },
       ];
 
-      // Add participant rows starting from row 9 (1-indexed)
-      // Row 9 = invited speaker slot, participants start from row 10 (index 9 in 0-based)
-      // Sheet layout: row 1=title, 2=room, 3=topic, 4=invited speaker header, 5=moderator header,
-      // 6=IT header (new), 7=blank, 8=column headers, 9=invited speaker slot, 10+=participants
+      // Participant rows from row 9 onwards (row 8 = header row, row 9 = first participant)
+      // Columns: A=No, B=KodeAbstrak(empty), C=Nama (with 🔴 if online), D=Institusi, E=Country, F..J=Skor1-5, K=Total
       participants.forEach((p, i) => {
-        const rowNum = 10 + i; // row 10 = first participant
+        const rowNum = 9 + i;
+        const isOnline = p[4] && p[4].toLowerCase().includes('online');
+        const displayName = isOnline ? `${p[0]} 🔴` : p[0];
         valueRanges.push({
-          range: `${room}!A${rowNum}:G${rowNum}`,
-          values: [[i + 1, p[0], p[1], p[2], p[3], p[4], p[5]]]
+          range: `${room}!A${rowNum}:E${rowNum}`,
+          values: [[i + 1, '', displayName, p[1], p[2]]]
         });
       });
 

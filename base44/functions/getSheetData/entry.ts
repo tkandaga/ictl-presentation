@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
 const SPREADSHEET_ID = '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
-const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10','ROOM 11'];
+const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10','ROOM 11','ROOM 12','ROOM 13','ROOM 14','ROOM 15','ROOM 16'];
 
 Deno.serve(async (req) => {
   try {
@@ -37,12 +37,13 @@ Deno.serve(async (req) => {
         abstractCode: row[1] || '',
         name: row[2] || '',
         institution: row[3] || '',
-        score1: row[4] || '',
-        score2: row[5] || '',
-        score3: row[6] || '',
-        score4: row[7] || '',
-        score5: row[8] || '',
-        total: row[9] || '0',
+        country: row[4] || '',
+        score1: row[5] || '',
+        score2: row[6] || '',
+        score3: row[7] || '',
+        score4: row[8] || '',
+        score5: row[9] || '',
+        total: row[10] || '0',
       });
     }
 
