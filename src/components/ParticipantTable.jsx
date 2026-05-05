@@ -146,7 +146,7 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
               <li>Geser slider untuk setiap kategori (<span className="font-semibold">0–100</span>)</li>
               <li>Klik tombol <span className="font-semibold">Simpan</span> untuk menyimpan</li>
             </ol>
-            <p className="text-xs text-orange-700 mt-2">🔴 = Presenter hadir secara <span className="font-semibold">Online</span></p>
+            <p className="text-xs text-orange-700 mt-2">🟢 = Presenter hadir secara <span className="font-semibold">On-site</span></p>
           </div>
         </div>
 
