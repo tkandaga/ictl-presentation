@@ -336,8 +336,7 @@ Deno.serve(async (req) => {
       // Participant rows from row 9 onwards (row 7=col header, row 8=sub-header scores)
       participants.forEach((p, i) => {
         const rowNum = 9 + i;
-        const isOnline = p[4] && p[4].toLowerCase().includes('online');
-        const displayName = isOnline ? `${p[0]} 🔴` : p[0];
+        const displayName = p[0];
         valueRanges.push({
           range: `${room}!A${rowNum}:E${rowNum}`,
           values: [[i + 1, '', displayName, p[1], p[2]]]
