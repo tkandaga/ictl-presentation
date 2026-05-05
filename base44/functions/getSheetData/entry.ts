@@ -25,17 +25,23 @@ Deno.serve(async (req) => {
     const minuteTaker = rows[4]?.[2]?.trim() || '';
 
     // Parse participants (from row 7 onwards, 0-indexed = row 8 in sheet)
+    // Row 8 in sheet (index 7) = "1, Invited Speaker" → skip it
+    // Row 9 in sheet (index 8) = first real participant → display as No 1
     const participants = [];
-    for (let i = 7; i < rows.length; i++) {
+    let counter = 1;
+    for (let i = 8; i < rows.length; i++) {
       const row = rows[i];
       if (!row || !row[0]) continue;
       const no = row[0];
       if (isNaN(parseInt(no))) continue;
+      // Skip duplicate last row (empty name)
+      const name = row[2]?.trim() || '';
+      if (!name) continue;
       participants.push({
-        rowIndex: i + 1, // 1-indexed for Sheets API (i=7 → row 8)
-        no: row[0] || '',
+        rowIndex: i + 1, // 1-indexed for Sheets API
+        no: counter++,
         abstractCode: row[1] || '',
-        name: row[2] || '',
+        name: name,
         institution: row[3] || '',
         country: row[4] || '',
         score1: row[5] || '',
