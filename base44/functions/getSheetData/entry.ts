@@ -24,19 +24,18 @@ Deno.serve(async (req) => {
     const moderator = rows[3]?.[2]?.trim() || '';
     const minuteTaker = rows[4]?.[2]?.trim() || '';
 
-    // Parse participants (from row 7 onwards, 0-indexed = row 8 in sheet)
-    // Row 8 in sheet (index 7) = "1, Invited Speaker" → skip it
-    // Row 9 in sheet (index 8) = first real participant → display as No 1
+    // Parse participants - start from index 8 (row 9), row 8 is sub-header for scores
+    // Skip: empty col A, non-numeric col A, empty name, "Invited Speaker" name
     const participants = [];
     let counter = 1;
     for (let i = 8; i < rows.length; i++) {
       const row = rows[i];
       if (!row || !row[0]) continue;
-      const no = row[0];
-      if (isNaN(parseInt(no))) continue;
-      // Skip duplicate last row (empty name)
+      if (isNaN(parseInt(row[0]))) continue;
       const name = row[2]?.trim() || '';
       if (!name) continue;
+      // Skip the "Invited Speaker" placeholder row
+      if (name.toLowerCase().includes('invited speaker')) continue;
       participants.push({
         rowIndex: i + 1, // 1-indexed for Sheets API
         no: counter++,

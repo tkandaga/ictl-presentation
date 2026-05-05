@@ -318,15 +318,24 @@ Deno.serve(async (req) => {
         continue;
       }
 
+      // First, clear old participant data (rows 8-30) to avoid stale data
+      await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(room + '!A8:K30')}:clear`,
+        {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        }
+      );
+
       const valueRanges = [
         { range: `${room}!C3`, values: [[header.invitedSpeaker]] },
         { range: `${room}!C4`, values: [[header.moderator]] },
         { range: `${room}!C5`, values: [[header.it]] },
       ];
 
-      // Participant rows from row 8, columns A=No, B=kosong, C=Nama (🔴 if online), D=Institusi, E=Country
+      // Participant rows from row 9 onwards (row 7=col header, row 8=sub-header scores)
       participants.forEach((p, i) => {
-        const rowNum = 8 + i;
+        const rowNum = 9 + i;
         const isOnline = p[4] && p[4].toLowerCase().includes('online');
         const displayName = isOnline ? `${p[0]} 🔴` : p[0];
         valueRanges.push({
