@@ -92,7 +92,6 @@ export default function ParticipantTable({ participants, onSaveScores, roomData 
     win.document.close();
     win.focus();
     win.print();
-    win.close();
   };
 
   const handleSave = async (scores) => {
