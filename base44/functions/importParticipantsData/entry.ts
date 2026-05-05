@@ -318,17 +318,18 @@ Deno.serve(async (req) => {
         continue;
       }
 
-      // Build value ranges for header (cells C3, C4, C5 = invitedSpeaker, moderator, IT)
+      // Build value ranges for header:
+      // C3=Invited Speaker, C4=Moderator, C5=IT
       const valueRanges = [
         { range: `${room}!C3`, values: [[header.invitedSpeaker]] },
         { range: `${room}!C4`, values: [[header.moderator]] },
         { range: `${room}!C5`, values: [[header.it]] },
       ];
 
-      // Participant rows from row 9 onwards (row 8 = header row, row 9 = first participant)
-      // Columns: A=No, B=KodeAbstrak(empty), C=Nama (with 🔴 if online), D=Institusi, E=Country, F..J=Skor1-5, K=Total
+      // Participant rows from row 8 onwards (row 7 = column header row)
+      // Columns: A=No, B=Abstract Code(empty), C=Nama (with 🔴 if online), D=Institusi, E=Country
       participants.forEach((p, i) => {
-        const rowNum = 9 + i;
+        const rowNum = 8 + i;
         const isOnline = p[4] && p[4].toLowerCase().includes('online');
         const displayName = isOnline ? `${p[0]} 🔴` : p[0];
         valueRanges.push({

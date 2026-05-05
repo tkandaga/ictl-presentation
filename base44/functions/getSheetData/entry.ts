@@ -18,21 +18,21 @@ Deno.serve(async (req) => {
     const data = await dataRes.json();
     const rows = data.values || [];
 
-    // Parse header info (rows 1-4, 0-indexed)
-    const roomNumber = rows[1]?.[2]?.replace(':','').trim() || '';
-    const invitedSpeaker = rows[2]?.[2]?.replace(':','').trim() || '';
-    const moderator = rows[3]?.[2]?.replace(':','').trim() || '';
-    const minuteTaker = rows[4]?.[2]?.replace(':','').trim() || '';
+    // Parse header info (0-indexed): row1=ROOM NUMBER, row2=INVITED SPEAKER, row3=MODERATOR, row4=IT
+    const roomNumber = rows[1]?.[2]?.trim() || '';
+    const invitedSpeaker = rows[2]?.[2]?.trim() || '';
+    const moderator = rows[3]?.[2]?.trim() || '';
+    const minuteTaker = rows[4]?.[2]?.trim() || '';
 
-    // Parse participants (from row 8 onwards, 0-indexed)
+    // Parse participants (from row 7 onwards, 0-indexed = row 8 in sheet)
     const participants = [];
-    for (let i = 8; i < rows.length; i++) {
+    for (let i = 7; i < rows.length; i++) {
       const row = rows[i];
       if (!row || !row[0]) continue;
       const no = row[0];
       if (isNaN(parseInt(no))) continue;
       participants.push({
-        rowIndex: i + 1, // 1-indexed for Sheets API
+        rowIndex: i + 1, // 1-indexed for Sheets API (i=7 → row 8)
         no: row[0] || '',
         abstractCode: row[1] || '',
         name: row[2] || '',
