@@ -25,7 +25,6 @@ export default function HeaderInfo({ data, onSave }) {
   const fields = [
     { key: 'moderator', label: 'Moderator' },
     { key: 'invitedSpeaker', label: 'Invited Speaker' },
-    { key: 'minuteTaker', label: 'IT' },
   ];
 
   return (
