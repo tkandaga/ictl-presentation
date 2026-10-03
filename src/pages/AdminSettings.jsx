@@ -70,6 +70,18 @@ export default function AdminSettings() {
     }
   };
 
+  // Accept either a bare ID or a full Google Sheets URL and reduce it to the ID.
+  const normalizeSpreadsheetId = (raw) => {
+    const clean = (raw || "").trim();
+    const m = clean.match(/\/spreadsheets\/d\/([^/]+)/);
+    if (m) return m[1];
+    return clean.split("/")[0];
+  };
+
+  const handleSheetChange = (raw) => {
+    handleField("spreadsheetId", normalizeSpreadsheetId(raw));
+  };
+
   const handleSave = async () => {
     setSavingState(true);
     try {
@@ -225,12 +237,12 @@ export default function AdminSettings() {
                 <Label className="text-xs text-gray-500 mb-1">Spreadsheet ID</Label>
                 <Input
                   value={form.spreadsheetId}
-                  onChange={(e) => handleField('spreadsheetId', e.target.value)}
-                  placeholder="1yLIYFFDKjoL8..."
+                  onChange={(e) => handleSheetChange(e.target.value)}
+                  placeholder="Tempel URL Google Sheets atau ID di sini"
                   className="font-mono"
                 />
-                <p className="text-[11px] text-gray-400 mt-1">
-                  Ambil dari URL spreadsheet: https://docs.google.com/spreadsheets/d/<b>[ID]</b>/edit
+                <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed">
+                  Bisa tempel langsung URL spreadsheet (mis. <span className="font-mono">https://docs.google.com/spreadsheets/d/1yLIYFFDKjoL8.../edit</span>); ID akan diambil otomatis.
                 </p>
               </div>
             </section>
