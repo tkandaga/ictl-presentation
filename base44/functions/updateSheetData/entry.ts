@@ -1,12 +1,16 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const SPREADSHEET_ID = '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
+async function getSpreadsheetId(base44) {
+  const list = await base44.asServiceRole.entities.AppConfig.list('-created_date', 1);
+  return list?.[0]?.spreadsheetId || '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
+}
 
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     const body = await req.json();
     const { accessToken } = await base44.asServiceRole.connectors.getConnection("googlesheets");
+    const SPREADSHEET_ID = await getSpreadsheetId(base44);
 
     const { sheetName, type, data } = body;
 

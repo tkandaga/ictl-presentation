@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
+import { useAppConfig } from "@/lib/AppConfigContext";
 import ModeratorSelector from "@/components/ModeratorSelector";
 import HeaderInfo from "@/components/HeaderInfo";
 import ParticipantTable from "@/components/ParticipantTable";
@@ -8,15 +10,19 @@ import TopParticipants from "@/components/TopParticipants";
 import useRoomData from "@/components/useRoomData";
 import { Loader2 } from "lucide-react";
 import { LogOut } from "lucide-react";
+import { Settings } from "lucide-react";
 import { toast } from "sonner";
 import { clearSession, getSession } from "@/pages/Login";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const { config } = useAppConfig();
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { roomData, loading, error, fetchRoomData } = useRoomData(selectedRoom);
   const session = getSession();
 
   const roleLabel = session?.role === 'admin' ? 'Administrator' : (session?.role === 'juri' ? 'Juri' : (session?.name || 'Pengguna'));
+  const isAdmin = session?.role === 'admin';
 
   const handleHeaderSave = async (headerData) => {
     await base44.functions.invoke('updateSheetData', {
@@ -67,14 +73,27 @@ export default function Dashboard() {
           </div>
           <div className="hidden md:block h-9 w-px bg-gray-200 shrink-0" />
           <div className="hidden md:block min-w-0">
-            <h1 className="text-xl font-bold text-gray-800 leading-tight">Seminar Internasional</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Sistem Penilaian Peserta</p>
+            <h1 className="text-xl font-bold text-gray-800 leading-tight">
+              {config?.seminarTitle || "Seminar Internasional"}
+            </h1>
+            <p className="text-xs text-gray-500 mt-0.5">
+              {config?.seminarSubtitle || "Sistem Penilaian Peserta"}
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 bg-blue-50 border border-blue-200 rounded-full px-2.5 py-1">
             Login sebagai: <span className="font-semibold">{roleLabel}</span>
           </span>
+          {isAdmin && (
+            <button
+              onClick={() => navigate("/admin")}
+              className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-blue-700 border border-gray-200 rounded-lg px-3 py-1.5 hover:border-blue-300 transition-colors"
+              title="Pengaturan backend"
+            >
+              <Settings className="w-4 h-4" /> <span className="hidden sm:inline">Pengaturan</span>
+            </button>
+          )}
           <button
             onClick={handleLogout}
             className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-red-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:border-red-300 transition-colors"

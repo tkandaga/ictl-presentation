@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 
 const USERS = [
   { username: "admin", password: "admin123", role: "admin", name: "Administrator" },
   { username: "juri", password: "juri123", role: "juri", name: "Juri" },
 ];
+
+const DEFAULT_CONFIG = {
+  seminarTitle: "Seminar Internasional",
+  seminarSubtitle: "Sistem Penilaian Peserta",
+  logoUrl: "https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/1156cfec3_Logo_UT-transparan.png",
+  flyerUrl: "https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/9cb1d3146_ICTLPosterA3-rev2.jpg",
+};
 
 export const SESSION_KEY = "sheetflow_session";
 
@@ -30,6 +38,16 @@ export default function Login() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [config, setConfig] = useState(DEFAULT_CONFIG);
+
+  useEffect(() => {
+    base44.functions.invoke("getConfig", {})
+      .then((res) => {
+        const data = res && res.data ? res.data : res;
+        if (data) setConfig({ ...DEFAULT_CONFIG, ...data });
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,8 +93,8 @@ export default function Login() {
         </div>
 
         <header className="sf-login-copy">
-          <h1>Seminar Internasional</h1>
-          <p>Sistem Penilaian Peserta — silakan masuk untuk melanjutkan penilaian.</p>
+          <h1>{config.seminarTitle}</h1>
+          <p>{config.seminarSubtitle} — silakan masuk untuk melanjutkan penilaian.</p>
         </header>
 
         <form className="sf-login-form" onSubmit={handleSubmit}>
@@ -141,8 +159,8 @@ export default function Login() {
       <aside className="sf-flyer-panel">
         <div className="sf-flyer-frame">
           <img
-            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/9cb1d3146_ICTLPosterA3-rev2.jpg"
-            alt="Flyer Seminar Internasional ICTL 2026"
+            src={config.flyerUrl}
+            alt="Flyer Seminar"
           />
         </div>
       </aside>

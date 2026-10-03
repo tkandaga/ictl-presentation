@@ -1,0 +1,22 @@
+{
+  "name": "AppConfig",
+  "type": "object",
+  "properties": {
+    "seminarTitle": {
+      "type": "string"
+    },
+    "seminarSubtitle": {
+      "type": "string"
+    },
+    "logoUrl": {
+      "type": "string"
+    },
+    "flyerUrl": {
+      "type": "string"
+    },
+    "spreadsheetId": {
+      "type": "string"
+    }
+  },
+  "required": []
+}

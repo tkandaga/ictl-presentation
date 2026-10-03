@@ -8,6 +8,8 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 // Add page imports here
 import Dashboard from "./pages/Dashboard";
 import Login, { getSession } from "./pages/Login";
+import AdminSettings from "./pages/AdminSettings";
+import { AppConfigProvider } from "@/lib/AppConfigContext";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -17,11 +19,14 @@ const AuthenticatedApp = () => {
   const session = getSession();
   if (session) {
     return (
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        {/* Add your page Route elements here */}
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <AppConfigProvider>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/admin" element={<AdminSettings />} />
+          {/* Add your page Route elements here */}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </AppConfigProvider>
     );
   }
 

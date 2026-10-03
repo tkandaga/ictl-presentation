@@ -1,7 +1,11 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const SPREADSHEET_ID = '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
 const SHEET_NAMES = ['ROOM 1','ROOM 2','ROOM 3','ROOM 4','ROOM 5','ROOM 6','ROOM 7','ROOM 8','ROOM 9','ROOM 10','ROOM 11','ROOM 12','ROOM 13','ROOM 14','ROOM 15','ROOM 16'];
+
+async function getSpreadsheetId(base44) {
+  const list = await base44.asServiceRole.entities.AppConfig.list('-created_date', 1);
+  return list?.[0]?.spreadsheetId || '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
+}
 
 Deno.serve(async (req) => {
   try {
@@ -9,6 +13,7 @@ Deno.serve(async (req) => {
     const { sheetName } = await req.json().catch(() => ({}));
     const { accessToken } = await base44.asServiceRole.connectors.getConnection("googlesheets");
 
+    const SPREADSHEET_ID = await getSpreadsheetId(base44);
     const targetSheet = sheetName || 'ROOM 1';
 
     const dataRes = await fetch(

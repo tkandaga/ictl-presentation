@@ -1,6 +1,9 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.25';
 
-const SPREADSHEET_ID = '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
+async function getSpreadsheetId(base44) {
+  const list = await base44.asServiceRole.entities.AppConfig.list('-created_date', 1);
+  return list?.[0]?.spreadsheetId || '1yLIYFFDKjoL8ZearUiRf9B1HUnHlsl3voZmsQw9IN5M';
+}
 
 const ROOM_HEADERS = {
   'ROOM 1':  { moderator: 'Valeria Yekti Kwasaning Gusti, M.Pd.', it: 'Renaldy Setiawan, S.Kom.', invitedSpeaker: 'Prof. Dr. Ir. Amalia Sapriati, M.A.' },
@@ -303,6 +306,7 @@ Deno.serve(async (req) => {
     }
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection("googlesheets");
+    const SPREADSHEET_ID = await getSpreadsheetId(base44);
     const body = await req.json().catch(() => ({}));
     const targetRoom = body.room;
 
