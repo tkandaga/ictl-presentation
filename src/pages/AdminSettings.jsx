@@ -93,9 +93,10 @@ export default function AdminSettings() {
         spreadsheetId: form.spreadsheetId,
       });
       toast.success("Pengaturan berhasil disimpan");
+      // Reload the app so the dashboard (and login) re-read the freshly saved config.
+      window.location.replace("/");
     } catch {
       toast.error("Gagal menyimpan pengaturan");
-    } finally {
       setSavingState(false);
     }
   };
