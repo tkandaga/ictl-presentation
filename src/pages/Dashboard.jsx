@@ -4,6 +4,7 @@ import ModeratorSelector from "@/components/ModeratorSelector";
 import HeaderInfo from "@/components/HeaderInfo";
 import ParticipantTable from "@/components/ParticipantTable";
 import RoomDataError from "@/components/RoomDataError";
+import TopParticipants from "@/components/TopParticipants";
 import useRoomData from "@/components/useRoomData";
 import { Loader2 } from "lucide-react";
 import { LogOut } from "lucide-react";
@@ -105,11 +106,14 @@ export default function Dashboard() {
         ) : roomData ? (
           <>
             <HeaderInfo data={roomData} onSave={handleHeaderSave} />
-            <ParticipantTable
-              participants={roomData.participants}
-              onSaveScores={handleScoresSave}
-              roomData={roomData}
-            />
+            <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 items-start">
+              <ParticipantTable
+                participants={roomData.participants}
+                onSaveScores={handleScoresSave}
+                roomData={roomData}
+              />
+              <TopParticipants participants={roomData.participants} />
+            </div>
           </>
         ) : null}
       </div>
