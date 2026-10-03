@@ -1,26 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import ModeratorSelector from "@/components/ModeratorSelector";
 import HeaderInfo from "@/components/HeaderInfo";
 import ParticipantTable from "@/components/ParticipantTable";
+import RoomDataError from "@/components/RoomDataError";
+import useRoomData from "@/components/useRoomData";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Dashboard() {
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [roomData, setRoomData] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const fetchRoomData = async (room) => {
-    setLoading(true);
-    const res = await base44.functions.invoke('getSheetData', { sheetName: room });
-    setRoomData(res.data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (selectedRoom) fetchRoomData(selectedRoom);
-  }, [selectedRoom]);
+  const { roomData, loading, error, fetchRoomData } = useRoomData(selectedRoom);
 
   const handleHeaderSave = async (headerData) => {
     await base44.functions.invoke('updateSheetData', {
@@ -67,6 +57,8 @@ export default function Dashboard() {
             <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             <span className="ml-3 text-gray-600">Memuat data...</span>
           </div>
+        ) : error ? (
+          <RoomDataError error={error} onRetry={() => fetchRoomData(selectedRoom)} />
         ) : roomData ? (
           <>
             <HeaderInfo data={roomData} onSave={handleHeaderSave} />
