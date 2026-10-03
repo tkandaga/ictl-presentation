@@ -7,9 +7,23 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 // Add page imports here
 import Dashboard from "./pages/Dashboard";
+import Login, { getSession } from "./pages/Login";
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+
+  // Custom internal auth takes precedence: if a SheetFlow session exists,
+  // render the app directly (dashboard or 404) and bypass platform auth.
+  const session = getSession();
+  if (session) {
+    return (
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        {/* Add your page Route elements here */}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    );
+  }
 
   // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
@@ -25,18 +39,22 @@ const AuthenticatedApp = () => {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
-      navigateToLogin();
-      return null;
+      // No custom session and platform auth required → show custom login
+      return (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<Login />} />
+        </Routes>
+      );
     }
   }
 
-  // Render the main app
+  // No session, no platform auth required → show custom login
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Login />} />
       {/* Add your page Route elements here */}
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="*" element={<Login />} />
     </Routes>
   );
 };
