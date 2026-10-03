@@ -76,9 +76,10 @@ export default function TopParticipants({ participants }) {
           top3.map((p, i) => {
             const meta = RANK_META[i];
             const Icon = meta.icon;
-            // Skala visual bar: petakan skor (0–500) ke rentang 50%–100%
+            // Skala visual bar: skor (0–500) → persen (0–100), lalu dinaikkan
+            // ke rentang tampilan min 50% agar bar tetap terlihat proporsional.
             const raw = Math.min(100, Math.round((p._total / MAX_TOTAL) * 100));
-            const pct = Math.max(BAR_MIN, Math.min(BAR_MAX, raw));
+            const pct = BAR_MIN + (raw / BAR_MAX) * (BAR_MAX - BAR_MIN);
             return (
               <div key={p.rowIndex ?? i} className="flex items-center gap-3">
                 <div
