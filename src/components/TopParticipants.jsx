@@ -1,13 +1,9 @@
 import { useMemo, useEffect, useState } from "react";
 import { Trophy, Medal, Award } from "lucide-react";
 
-// Per participant we have: name, institution, total (string/number)
-// Maximum possible total = 5 categories × 100 = 500
-const MAX_TOTAL = 500;
-// Bar skala: min 50, maks 100 (di luar rentang dipaksa ke batas)
-const BAR_MIN = 50;
-const BAR_MAX = 100;
-
+// Per participant we have: name, institution, total (string/number).
+// Total adalah rata-rata 5 kategori, sehingga maksimumnya 100.
+const MAX_TOTAL = 100;
 const RANK_META = [
   {
     icon: Trophy,
@@ -39,14 +35,25 @@ const RANK_META = [
 ];
 
 export default function TopParticipants({ participants }) {
-  // Sort by total descending, take top 3 with a real score
+  // Sort by total descending, take top 3 with a real score.
+  // Apply a shared (tied) ranking: equal scores share the same rank & medal.
   const top3 = useMemo(() => {
     if (!participants) return [];
-    return [...participants]
+    const sorted = [...participants]
       .map((p) => ({ ...p, _total: Number(p.total) || 0 }))
       .filter((p) => p._total > 0)
       .sort((a, b) => b._total - a._total)
       .slice(0, 3);
+    let lastScore = null;
+    let lastRank = 1;
+    return sorted.map((p, i) => {
+      if (lastScore !== null && p._total === lastScore) {
+        return { ...p, rank: lastRank };
+      }
+      lastScore = p._total;
+      lastRank = i + 1;
+      return { ...p, rank: lastRank };
+    });
   }, [participants]);
 
   // Animate bar widths on mount / when data changes
@@ -74,12 +81,10 @@ export default function TopParticipants({ participants }) {
           </div>
         ) : (
           top3.map((p, i) => {
-            const meta = RANK_META[i];
+            const meta = RANK_META[p.rank - 1];
             const Icon = meta.icon;
-            // Skala visual bar: skor (0–500) → persen (0–100), lalu dinaikkan
-            // ke rentang tampilan min 50% agar bar tetap terlihat proporsional.
-            const raw = Math.min(100, Math.round((p._total / MAX_TOTAL) * 100));
-            const pct = BAR_MIN + (raw / BAR_MAX) * (BAR_MAX - BAR_MIN);
+            // Skala visual bar: skor (0–500) → persen (0–100), nilai 100 = penuh.
+            const pct = Math.min(100, Math.round((p._total / MAX_TOTAL) * 100));
             return (
               <div key={p.rowIndex ?? i} className="flex items-center gap-3">
                 <div
