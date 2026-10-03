@@ -9,7 +9,9 @@ export const SESSION_KEY = "sheetflow_session";
 
 export function getSession() {
   try {
-    const raw = localStorage.getItem(SESSION_KEY);
+    // Session may live in localStorage (when "Ingat saya" is checked) or
+    // sessionStorage (default), so read both to keep login working either way.
+    const raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
