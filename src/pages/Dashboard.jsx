@@ -105,8 +105,10 @@ export default function Dashboard() {
           <RoomDataError error={error} onRetry={() => fetchRoomData(selectedRoom)} />
         ) : roomData ? (
           <>
-            <HeaderInfo data={roomData} onSave={handleHeaderSave} />
-            <TopParticipants participants={roomData.participants} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <HeaderInfo data={roomData} onSave={handleHeaderSave} />
+              <TopParticipants participants={roomData.participants} />
+            </div>
             <ParticipantTable
               participants={roomData.participants}
               onSaveScores={handleScoresSave}
