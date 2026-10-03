@@ -8,11 +8,14 @@ import useRoomData from "@/components/useRoomData";
 import { Loader2 } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { clearSession } from "@/pages/Login";
+import { clearSession, getSession } from "@/pages/Login";
 
 export default function Dashboard() {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { roomData, loading, error, fetchRoomData } = useRoomData(selectedRoom);
+  const session = getSession();
+
+  const roleLabel = session?.role === 'admin' ? 'Administrator' : (session?.role === 'juri' ? 'Juri' : (session?.name || 'Pengguna'));
 
   const handleHeaderSave = async (headerData) => {
     await base44.functions.invoke('updateSheetData', {
@@ -42,17 +45,42 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Seminar Internasional</h1>
-          <p className="text-sm text-gray-500 mt-1">Sistem Penilaian Peserta</p>
+      <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-3 shrink-0">
+            <img
+              className="h-10 w-auto object-contain"
+              src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/1a51227b6_Logo_kemendikbud.png"
+              alt="Logo Kemendikbud"
+            />
+            <img
+              className="h-10 w-auto object-contain"
+              src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/1156cfec3_Logo_UT-transparan.png"
+              alt="Logo Universitas Terbuka"
+            />
+            <img
+              className="h-10 w-auto object-contain"
+              src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/560b57139_logoICTL.png"
+              alt="Logo ICTL"
+            />
+          </div>
+          <div className="hidden md:block h-9 w-px bg-gray-200 shrink-0" />
+          <div className="hidden md:block min-w-0">
+            <h1 className="text-xl font-bold text-gray-800 leading-tight">Seminar Internasional</h1>
+            <p className="text-xs text-gray-500 mt-0.5">Sistem Penilaian Peserta</p>
+          </div>
         </div>
-        <button
-          onClick={handleLogout}
-          className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-red-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:border-red-300 transition-colors"
-        >
-          <LogOut className="w-4 h-4" /> Keluar
-        </button>
+        <div className="flex items-center gap-3 shrink-0">
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 bg-blue-50 border border-blue-200 rounded-full px-2.5 py-1">
+            Login sebagai: <span className="font-semibold">{roleLabel}</span>
+          </span>
+          <button
+            onClick={handleLogout}
+            className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-red-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:border-red-300 transition-colors"
+          >
+            <LogOut className="w-4 h-4" /> Keluar
+          </button>
+        </div>
       </div>
 
       {/* Moderator Selector Bar */}

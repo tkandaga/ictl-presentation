@@ -20,6 +20,7 @@ export function getSession() {
 
 export function clearSession() {
   localStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
 }
 
 export default function Login() {
