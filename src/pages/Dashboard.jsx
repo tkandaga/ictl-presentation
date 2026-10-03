@@ -106,14 +106,12 @@ export default function Dashboard() {
         ) : roomData ? (
           <>
             <HeaderInfo data={roomData} onSave={handleHeaderSave} />
-            <div className="grid grid-cols-1 xl:grid-cols-[1fr_340px] gap-6 items-start">
-              <ParticipantTable
-                participants={roomData.participants}
-                onSaveScores={handleScoresSave}
-                roomData={roomData}
-              />
-              <TopParticipants participants={roomData.participants} />
-            </div>
+            <TopParticipants participants={roomData.participants} />
+            <ParticipantTable
+              participants={roomData.participants}
+              onSaveScores={handleScoresSave}
+              roomData={roomData}
+            />
           </>
         ) : null}
       </div>
