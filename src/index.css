@@ -93,9 +93,18 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(320px, 1fr) 1.1fr;
-  background: #fff;
+  background: linear-gradient(135deg, #1d4ed8, #4f46e5 45%, #7c3aed, #a855f7);
   overflow: hidden;
   animation: sf-arrive 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.sf-login-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 24rem at 8% -6%, rgba(250, 204, 21, 0.4), transparent 60%),
+    radial-gradient(36rem 26rem at 108% 108%, rgba(168, 85, 247, 0.5), transparent 60%);
 }
 .sf-login-panel {
   min-height: 100vh;
@@ -103,7 +112,11 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: linear-gradient(160deg, #ffffff 0%, #f2effb 100%);
+  border-right: 1px solid rgba(25, 16, 66, 0.12);
+  box-shadow: 12px 0 40px -20px rgba(52, 34, 91, 0.45);
+  position: relative;
+  z-index: 1;
   animation: sf-arrive 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .sf-brand-logos {
@@ -126,18 +139,27 @@
 }
 .sf-login-copy { margin-bottom: 30px; }
 .sf-login-copy h1 {
-  font-size: 28px;
-  line-height: 1.14;
+  font-size: 30px;
+  line-height: 1.12;
   letter-spacing: -0.045em;
   font-weight: 720;
   margin: 0 0 12px;
-  color: #20202a;
+  color: #1e1b4b;
 }
 .sf-login-copy p {
   font-size: 13px;
   line-height: 1.65;
-  color: #777582;
+  color: #6b6880;
   margin: 0;
+}
+.sf-login-copy h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #2563eb, #facc15 55%, #a855f7);
 }
 .sf-login-form {
   display: flex;
@@ -222,18 +244,19 @@
 .sf-submit {
   height: 46px;
   border: 0;
-  border-radius: 7px;
-  background: #6366f1;
-  color: white;
-  font: 650 13px system-ui, -apple-system, sans-serif;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2563eb, #4f46e5 45%, #7c3aed);
+  color: #fff;
+  font: 700 14px system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  box-shadow: 0 5px 12px rgba(99, 102, 241, 0.17);
-  transition: background 0.18s, box-shadow 0.18s, filter 0.18s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 16px rgba(79, 70, 229, 0.35), 0 2px 0 rgba(30, 27, 75, 0.45);
+  transition: filter 0.18s, box-shadow 0.18s, transform 0.18s;
 }
-.sf-submit:hover { background: #5558e7; box-shadow: 0 7px 16px rgba(99, 102, 241, 0.24); }
-.sf-submit:active { filter: brightness(0.9); }
-.sf-submit:focus-visible { outline: 2px solid #3638b5; outline-offset: 3px; }
-.sf-submit:disabled { opacity: 0.7; cursor: default; }
+.sf-submit:hover { filter: saturate(1.12) brightness(1.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 9px 22px rgba(99, 102, 241, 0.45), 0 3px 0 rgba(30, 27, 75, 0.5); transform: translateY(-1px); }
+.sf-submit:active { filter: brightness(0.92); transform: translateY(1px); }
+.sf-submit:focus-visible { outline: 2px solid #facc15; outline-offset: 3px; }
+.sf-submit:disabled { opacity: 0.7; cursor: default; transform: none; }
 .sf-login-footer {
   margin-top: auto;
   padding-top: 34px;
@@ -246,8 +269,8 @@
   min-height: 100vh;
   box-sizing: border-box;
   padding: 18px;
-  background: #f2effb;
-  border-left: 1px solid #ebe8f5;
+  background: linear-gradient(160deg, #f2effb 0%, #dcd6f0 100%);
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
   display: flex;
   animation: sf-arrive 0.78s cubic-bezier(0.2, 0.8, 0.2, 1) 0.08s both;
 }
@@ -259,9 +282,10 @@
   position: relative;
   aspect-ratio: 3508 / 4961;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 14px;
   background: #ffffff;
-  box-shadow: 0 15px 38px rgba(52, 34, 91, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 18px 44px rgba(52, 34, 91, 0.35), 0 3px 0 rgba(30, 27, 75, 0.4);
 }
 .sf-flyer-frame img {
   position: absolute;
@@ -288,11 +312,16 @@
 }
 @media (max-width: 1100px) {
   .sf-login-page { grid-template-columns: 1fr; }
-  .sf-login-panel { min-height: auto; }
+  .sf-login-panel {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(25, 16, 66, 0.12);
+    box-shadow: 0 14px 30px -24px rgba(52, 34, 91, 0.5);
+  }
   .sf-flyer-panel {
     min-height: auto;
     border-left: 0;
-    border-top: 1px solid #ebe8f5;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
     padding-top: 28px;
   }
   .sf-flyer-frame { max-width: 420px; }
