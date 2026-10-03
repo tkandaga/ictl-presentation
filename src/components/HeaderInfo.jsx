@@ -49,7 +49,7 @@ export default function HeaderInfo({ data, onSave }) {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {fields.map(({ key, label }) => (
           <div key={key}>
             <Label className="text-xs text-gray-500 mb-1">{label}</Label>

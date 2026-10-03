@@ -4,6 +4,9 @@ import { Trophy, Medal, Award } from "lucide-react";
 // Per participant we have: name, institution, total (string/number)
 // Maximum possible total = 5 categories × 100 = 500
 const MAX_TOTAL = 500;
+// Bar skala: min 50, maks 100 (di luar rentang dipaksa ke batas)
+const BAR_MIN = 50;
+const BAR_MAX = 100;
 
 const RANK_META = [
   {
@@ -73,7 +76,9 @@ export default function TopParticipants({ participants }) {
           top3.map((p, i) => {
             const meta = RANK_META[i];
             const Icon = meta.icon;
-            const pct = Math.min(100, Math.round((p._total / MAX_TOTAL) * 100));
+            // Skala visual bar: petakan skor (0–500) ke rentang 50%–100%
+            const raw = Math.min(100, Math.round((p._total / MAX_TOTAL) * 100));
+            const pct = Math.max(BAR_MIN, Math.min(BAR_MAX, raw));
             return (
               <div key={p.rowIndex ?? i} className="flex items-center gap-3">
                 <div
