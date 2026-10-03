@@ -54,9 +54,21 @@ export default function Login() {
     <div className="sf-login-page">
       <section className="sf-login-panel">
         <div className="sf-brand-logos" aria-label="Logo Seminar Internasional">
-          <span className="sf-logo-slot" data-slot="logo1" />
-          <span className="sf-logo-slot" data-slot="logo2" />
-          <span className="sf-logo-slot" data-slot="logo3" />
+          <img
+            className="sf-logo-img"
+            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/1a51227b6_Logo_kemendikbud.png"
+            alt="Logo Kemendikbud"
+          />
+          <img
+            className="sf-logo-img"
+            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/1156cfec3_Logo_UT-transparan.png"
+            alt="Logo Universitas Terbuka"
+          />
+          <img
+            className="sf-logo-img"
+            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/560b57139_logoICTL.png"
+            alt="Logo ICTL"
+          />
         </div>
 
         <header className="sf-login-copy">
@@ -126,8 +138,8 @@ export default function Login() {
       <aside className="sf-flyer-panel">
         <div className="sf-flyer-frame">
           <img
-            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/ba752ea7c_generated_97f682d3.jpg"
-            alt="Flyer Seminar Internasional"
+            src="https://media.base44.com/images/public/69ea3d6e30665ad66c697b6b/9cb1d3146_ICTLPosterA3-rev2.jpg"
+            alt="Flyer Seminar Internasional ICTL 2026"
           />
         </div>
       </aside>
